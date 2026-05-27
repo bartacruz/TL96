@@ -13,8 +13,8 @@
 
 <piston_engine name="ROTAX915IS">
   <minmp unit="INHG">         10.0 </minmp>
-  <maxmp unit="INHG">         28.5 </maxmp>
-  <displacement unit="IN3"> 267.90 </displacement>
+  <maxmp unit="INHG">        51 </maxmp>
+  <displacement unit="IN3"> 82.60 </displacement>
   <maxhp>        141.00 </maxhp>
   <cycles>         4.0 </cycles>
   <idlerpm>      700.0 </idlerpm>
@@ -30,5 +30,5 @@
   <stroke unit="IN">  2.40 </stroke>
   <bore unit="IN">    3.31 </bore>
   <cylinders>         4.0  </cylinders>
-  <compression-ratio>  11.1 </compression-ratio>
+  <compression-ratio>  9 </compression-ratio>
 </piston_engine>

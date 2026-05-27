@@ -40,14 +40,14 @@
 -->
 
   <metrics>
-    <wingarea unit="FT2"> 130.26 </wingarea>
-    <wingspan unit="FT"> 31.50 </wingspan>
-    <wing_incidence> 2.00 </wing_incidence>
-    <chord unit="FT"> 4.14 </chord>
-    <htailarea unit="FT2"> 20.84 </htailarea>
-    <htailarm unit="FT"> 11.09 </htailarm>
-    <vtailarea unit="FT2"> 13.03 </vtailarea>
-    <vtailarm unit="FT"> 10.66 </vtailarm>
+    <wingarea unit="FT2"> 121.60 </wingarea> 
+    <wingspan unit="FT"> 30.18 </wingspan> 
+    <wing_incidence> 2.90 </wing_incidence>
+    <chord unit="IN"> 55.90 </chord>
+    <htailarea unit="FT2"> 19.50 </htailarea> 
+    <htailarm unit="FT"> 12.50 </htailarm>
+    <vtailarea unit="FT2"> 11.20 </vtailarea>
+    <vtailarm unit="FT"> 11.50 </vtailarm>
     <location name="AERORP" unit="IN">
       <x> 0.00 </x>
       <y> 0.00 </y>
@@ -66,14 +66,14 @@
   </metrics>
 
   <mass_balance>
-    <ixx unit="SLUG*FT2"> 370 </ixx>
-    <iyy unit="SLUG*FT2"> 302 </iyy>
-    <izz unit="SLUG*FT2"> 630 </izz>
-    <emptywt unit="LBS"> 659 </emptywt>
+     <ixx unit="SLUG*FT2"> 310 </ixx> 
+    <iyy unit="SLUG*FT2"> 260 </iyy> 
+    <izz unit="SLUG*FT2"> 530 </izz> 
+    <emptywt unit="LBS"> 584 </emptywt>
     <location name="CG" unit="IN">
-      <x> 0.00 </x>
+      <x> -6.50 </x>
       <y> 0.00 </y>
-      <z> 0.00 </z>
+      <z> 5.66 </z>
     </location>
     <pointmass name="Pilot">
       <weight unit="LBS"> 150 </weight>
@@ -172,29 +172,24 @@
 
   <propulsion>
 
-    <engine file="ROTAX915IS">
+    <engine file="ROTAX912S">
       <location unit="IN">
-        <x> -53.39 </x>
-        <y> 0.00 </y>
-        <z> 2.61 </z>
-      </location>
-      <orient unit="DEG">
-        <pitch> 0.00 </pitch>
-        <roll> 0.00 </roll>
-        <yaw> 0.00 </yaw>
-      </orient>
+          <x> -50.39 </x>
+          <y> 0.00 </y>
+          <z> 2.61 </z>
+          </location>
       <feed>0</feed>
-      <thruster file="prop">
+      <thruster file="senseich-juanita">
         <sense> 1 </sense>
         <location unit="IN">
           <x> -69.58 </x>
           <y> 0.00 </y>
           <z> 5.66 </z>
-        </location>
+          </location>
         <orient unit="DEG">
-          <pitch> 0.00 </pitch>
+          <pitch> -2.00 </pitch>
           <roll> 0.00 </roll>
-          <yaw> 0.00 </yaw>
+          <yaw> 2.00 </yaw>
         </orient>
       </thruster>
     </engine>
@@ -411,7 +406,8 @@
             <tableData>
               -0.20 -0.750
                0.00  0.250
-               0.23  1.400
+               0.10  0.750
+               0.21  1.420
                0.60  0.710
             </tableData>
           </table>
@@ -424,7 +420,7 @@
           <property>aero/qbar-psf</property>
           <property>metrics/Sw-sqft</property>
           <property>fcs/flap-pos-deg</property>
-          <value> 0.01333 </value>
+          <value> 0.0150 </value>
         </product>
       </function>
 
@@ -461,9 +457,9 @@
             <independentVar lookup="row">aero/alpha-rad</independentVar>
             <tableData>
              -1.57    1.500
-             -0.26    0.036
-              0.00    0.028
-              0.26    0.036
+             -0.26    0.022
+              0.00    0.015
+              0.26    0.022
               1.57    1.500
             </tableData>
           </table>
@@ -476,7 +472,7 @@
           <property>aero/qbar-psf</property>
           <property>metrics/Sw-sqft</property>
           <property>aero/cl-squared</property>
-          <value>0.04</value>
+          <value>0.032</value>
         </product>
       </function>
 
@@ -636,7 +632,16 @@
           <value>-0.5</value>
         </product>
       </function>
-
+      <function name="aero/moment/Pitch_flap">
+        <description>Pitch moment due to flaps</description>
+        <product>
+          <property>aero/qbar-psf</property>
+          <property>metrics/Sw-sqft</property>
+          <property>metrics/cbarw-ft</property>
+          <property>fcs/flap-pos-deg</property>
+          <value>-0.00120</value>
+        </product>
+      </function>
       <function name="aero/moment/Pitch_elevator">
         <description>Pitch moment due to elevator</description>
         <product>
@@ -647,8 +652,8 @@
           <table>
             <independentVar lookup="row">velocities/mach</independentVar>
             <tableData>
-              0.0     -1.100
-              2.0     -0.275
+              0.0     -1.150
+              2.0     -0.285
             </tableData>
           </table>
         </product>
