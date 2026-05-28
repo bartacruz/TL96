@@ -5,10 +5,10 @@
   xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 
   <fileheader>
-    <author> Aeromatic v 0.96 </author>
-    <filecreationdate>2022-08-02</filecreationdate>
-    <version>$Revision: 1.20 $</version>
-    <description> Models a TL96. </description>
+    <author> Julio Santa Cruz.</author>
+    <filecreationdate>2026-08-02</filecreationdate>
+    <version>1.0</version>
+    <description> Models a TL96. Heavily modified the original by Aeromatic v 0.96 </description>
   </fileheader>
 
   <!--
@@ -42,16 +42,16 @@
   <metrics>
     <wingarea unit="FT2"> 121.60 </wingarea> 
     <wingspan unit="FT"> 30.18 </wingspan> 
-    <wing_incidence> 2.90 </wing_incidence>
+    <wing_incidence> 0 </wing_incidence>
     <chord unit="IN"> 55.90 </chord>
     <htailarea unit="FT2"> 19.50 </htailarea> 
     <htailarm unit="FT"> 12.50 </htailarm>
     <vtailarea unit="FT2"> 11.20 </vtailarea>
-    <vtailarm unit="FT"> 11.50 </vtailarm>
+    <vtailarm unit="FT"> 10.66 </vtailarm>
     <location name="AERORP" unit="IN">
       <x> 0.00 </x>
       <y> 0.00 </y>
-      <z> 0.00 </z>
+      <z> 15.00 </z>
     </location>
     <location name="EYEPOINT" unit="IN">
       <x> -6.119 </x>
@@ -71,9 +71,9 @@
     <izz unit="SLUG*FT2"> 530 </izz> 
     <emptywt unit="LBS"> 584 </emptywt>
     <location name="CG" unit="IN">
-      <x> -6.50 </x>
+      <x> -5.00 </x>
       <y> 0.00 </y>
-      <z> 5.66 </z>
+      <z> 18.00 </z>
     </location>
     <pointmass name="Pilot">
       <weight unit="LBS"> 150 </weight>
@@ -179,7 +179,7 @@
           <z> 2.61 </z>
           </location>
       <feed>0</feed>
-      <thruster file="senseich-juanita">
+      <thruster file="prop-68">
         <sense> 1 </sense>
         <location unit="IN">
           <x> -69.58 </x>
@@ -404,11 +404,13 @@
           <table>
             <independentVar lookup="row">aero/alpha-rad</independentVar>
             <tableData>
-              -0.20 -0.750
-               0.00  0.250
-               0.10  0.750
-               0.21  1.420
-               0.60  0.710
+              -0.20  -0.750
+               0.00   0.200
+               0.10   0.720
+               0.21   1.420
+               0.23   1.000
+               0.26   0.800
+               0.60   0.600  
             </tableData>
           </table>
         </product>
@@ -420,7 +422,7 @@
           <property>aero/qbar-psf</property>
           <property>metrics/Sw-sqft</property>
           <property>fcs/flap-pos-deg</property>
-          <value> 0.0150 </value>
+          <value> 0.0180 </value>
         </product>
       </function>
 
@@ -457,9 +459,9 @@
             <independentVar lookup="row">aero/alpha-rad</independentVar>
             <tableData>
              -1.57    1.500
-             -0.26    0.022
-              0.00    0.015
-              0.26    0.022
+             -0.26    0.045
+              0.00    0.026
+              0.26    0.050
               1.57    1.500
             </tableData>
           </table>
@@ -472,24 +474,7 @@
           <property>aero/qbar-psf</property>
           <property>metrics/Sw-sqft</property>
           <property>aero/cl-squared</property>
-          <value>0.032</value>
-        </product>
-      </function>
-
-      <function name="aero/force/Drag_mach">
-        <description>Drag due to mach</description>
-        <product>
-          <property>aero/qbar-psf</property>
-          <property>metrics/Sw-sqft</property>
-          <table>
-            <independentVar lookup="row">velocities/mach</independentVar>
-            <tableData>
-                0.00      0.000
-                0.7      0.000
-                1.10      0.023
-                1.80      0.015
-            </tableData>
-          </table>
+          <value>0.052</value>
         </product>
       </function>
 
@@ -499,17 +484,7 @@
           <property>aero/qbar-psf</property>
           <property>metrics/Sw-sqft</property>
           <property>fcs/flap-pos-deg</property>
-          <value> 0.00100 </value>
-        </product>
-      </function>
-
-      <function name="aero/force/Drag_speedbrake">
-        <description>Drag due to speedbrakes</description>
-        <product>
-          <property>aero/qbar-psf</property>
-          <property>metrics/Sw-sqft</property>
-          <property>fcs/speedbrake-pos-norm</property>
-          <value>0.028</value>
+          <value> 0.00120 </value>
         </product>
       </function>
 
@@ -628,8 +603,16 @@
           <property>aero/qbar-psf</property>
           <property>metrics/Sw-sqft</property>
           <property>metrics/cbarw-ft</property>
-          <property>aero/alpha-rad</property>
-          <value>-0.5</value>
+          <table>
+            <independentVar lookup="row">aero/alpha-rad</independentVar>
+            <tableData>
+              -0.0698   0.0300
+               0.0000   0.0000
+               0.0349  -0.0150
+               0.1047  -0.0450
+               0.2443  -0.1000
+            </tableData>
+          </table>
         </product>
       </function>
       <function name="aero/moment/Pitch_flap">
@@ -639,7 +622,7 @@
           <property>metrics/Sw-sqft</property>
           <property>metrics/cbarw-ft</property>
           <property>fcs/flap-pos-deg</property>
-          <value>-0.00120</value>
+          <value>-0.00160</value>
         </product>
       </function>
       <function name="aero/moment/Pitch_elevator">
@@ -652,8 +635,9 @@
           <table>
             <independentVar lookup="row">velocities/mach</independentVar>
             <tableData>
-              0.0     -1.150
-              2.0     -0.285
+              0.0     -1.450
+              0.2     -1.150
+              2.0     -0.250
             </tableData>
           </table>
         </product>
@@ -667,7 +651,7 @@
           <property>metrics/cbarw-ft</property>
           <property>aero/ci2vel</property>
           <property>velocities/q-aero-rad_sec</property>
-          <value>-12</value>
+          <value>-10</value>
         </product>
       </function>
 
@@ -679,7 +663,7 @@
           <property>metrics/cbarw-ft</property>
           <property>aero/ci2vel</property>
           <property>aero/alphadot-rad_sec</property>
-          <value>-7</value>
+          <value>-3.5</value>
         </product>
       </function>
 
