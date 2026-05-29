@@ -152,3 +152,41 @@ var instructor = func {
     var list = prop~"sim/multiplay/generic/int[0]";
     var id = setlistener(list, func(){print("instructor turned your motor off!"); setprop("controls/engines/engine/mixture", 0);},0 ,0);
 }
+var enableOSD = func {
+    var left  = screen.display.new(20, 10);
+    var right = screen.display.new(-300, 10);
+
+    left.add("/engines/engine/cht-degc");
+    left.add("/engines/engine/rpm");
+    left.add("/fdm/jsbsim/propulsion/engine/power-hp");
+    left.add("/engines/engine/fuel-flow-gph");
+    left.add("/engines/engine/mp-inhg");
+    left.add("/controls/engines/engine/throttle");
+    left.add("/velocities/airspeed-kt");
+    left.add("/velocities/groundspeed-kt");
+    left.add("/engines/engine/thrust_lb");
+    #right.add("/instrumentation/airspeed-indicator/indicated-speed-kt");
+    right.add("/fdm/jsbsim/systems/thermal/ambient-temp-c");
+    right.add("/environment/temperature-degc");
+    right.add("/fdm/jsbsim/aero/alpha-rad");
+    right.add("/orientation/alpha-deg");
+    right.add("/orientation/pitch-deg");
+    right.add("/controls/flight/elevator");
+    right.add("/controls/flight/elevator-trim");
+    #right.add("/fdm/jsbsim/aero/qbar-psf");
+    #right.add("/fdm/jsbsim/propulsion/engine[0]/thrust-coefficient");
+    #right.add("/fdm/jsbsim/aero/function/kCLge");
+    
+    #right.add("/fdm/jsbsim/aero/force/Lift_hull");
+}
+var engineHasStarted = setlistener("/engines/engine/running", func(val) {
+  if( val.getBoolValue() ) {
+    setprop("/engines/engine/has-started", 1);
+    setprop("/fdm/jsbsim/propulsion/engine/has-started", 1);
+    removelistener(engineHasStarted);
+  }
+});
+
+setlistener("/sim/signals/fdm-initialized", func {
+    #enableOSD();
+}, 0, 0);

@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <propeller version="1.01" name="prop">
+   <!-- Models a 68 inches propeller -->
   <ixx>   2.01 </ixx>
   <diameter unit="IN">  68.0 </diameter>
   <numblades> 3 </numblades>
@@ -31,11 +32,11 @@
         0.15   0.0715
         0.30   0.0705
         0.45   0.0685
-        0.60   0.0665 <!-- Subido levemente -->
-        0.75   0.0635 <!-- Subido levemente -->
-        0.90   0.0590 <!-- Subido para morder más aire -->
-        1.05   0.0540 <!-- Subido para morder más aire -->
-        1.20   0.0480 <!-- Incrementado para frenar el desbocamiento -->
+        0.60   0.0665 
+        0.75   0.0635 
+        0.90   0.0590 
+        1.05   0.0540 
+        1.20   0.0480 
         1.35   0.0390 
         1.50   0.0270
         1.65   0.0170

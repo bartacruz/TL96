@@ -205,7 +205,9 @@
     </tank>
 
   </propulsion>
-
+  
+  <system file="rotax-thermal"/>
+  
   <flight_control name="FCS: TL96">
 
     <channel name="Pitch">

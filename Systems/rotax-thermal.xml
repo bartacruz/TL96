@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+
+<system name="rotax-thermal">
+    <property type="BOOL" value="0">propulsion/engine/has-started</property>
+    <description>
+        Engine, liquid and gas temperatures fine-tunned to represent a Rotax 912S.
+        Outputs some values to /engines/engine/xxx for Flydat use.
+        Temperatures in Celsius.
+        Heavily influenced by the DA40 engine thermal system.
+        Engine heats proportional to MAP. Cools down transfering heat to water and oil.
+        Coolant and oil extract heat from the engine with different heat transfer rates.
+        Both cools down with air.
+        Exaust gas heats proportional to MAP when running. Cools down with ambient air when not.
+    </description>
+
+    <channel name="Engine Temperature">
+
+        <fcs_function name="systems/thermal/ambient-temp-c">
+            <function>
+                <product>
+                    <difference>
+                        <property>atmosphere/T-R</property>
+                        <value>491.67</value>
+                    </difference>
+                    <value>0.55555</value>
+                </product>
+            </function>
+        </fcs_function>
+
+        <fcs_function name="systems/thermal/engine-heating">
+            <function>
+                <sum>
+                    <property>systems/thermal/ambient-temp-c</property>
+                    <product>
+                        <sum>
+                            <product>
+                                <property>propulsion/engine[0]/map-inhg</property>
+                                <value>1.2</value>
+                            </product>
+                            <value>70</value>
+                        </sum>
+                        <property>propulsion/engine/set-running</property>
+                    </product>
+                </sum>
+            </function>
+        </fcs_function>
+
+        <summer name="systems/thermal/engine-target">
+            <input>systems/thermal/engine-heating</input>
+            <input>-systems/thermal/oil-heating</input>
+            <input>-systems/thermal/coolant-heating</input>
+        </summer>
+
+        <switch name="systems/thermal/engine-lag">
+            <default value="0.05" />
+            <test logic="AND" value="5">
+                propulsion/engine/has-started ne 1
+            </test>
+        </switch>
+
+        <lag_filter name="systems/thermal/engine-temp">
+            <input>systems/thermal/engine-target</input>
+            <c1>systems/thermal/engine-lag</c1>
+            <output>/engines/engine/cht-degc</output>
+        </lag_filter>
+    </channel>
+
+    <channel name="Oil Temperture">
+        <fcs_function name="systems/thermal/oil-cooling-air">
+            <function>
+                <product>
+                    <difference>
+                        <property>systems/thermal/oil-temp</property>
+                        <property>systems/thermal/ambient-temp-c</property>
+                    </difference>
+                    <value>0.012</value>
+                    <sum>
+                        <product>
+                            <property>velocities/vc-kts</property>
+                            <value>-0.01</value>
+                        </product>
+                        <value>-1.0</value>
+                    </sum>
+                </product>
+            </function>
+        </fcs_function>
+
+        <fcs_function name="systems/thermal/oil-heating">
+            <function>
+                <product>
+                    <difference>
+                        <property>systems/thermal/engine-temp</property>
+                        <property>systems/thermal/oil-temp</property>
+                    </difference>
+                    <!-- Engine to oil heat transfer -->
+                    <value>0.42</value>
+                </product>
+            </function>
+        </fcs_function>
+
+        <summer name="systems/thermal/oil-target">
+            <input>systems/thermal/oil-temp</input>
+            <input>systems/thermal/oil-heating</input>
+            <input>systems/thermal/oil-cooling-air</input>
+        </summer>
+
+        <switch name="systems/thermal/oil-lag">
+            <default value="0.0055" />
+            <test logic="AND" value="5">
+                propulsion/engine/has-started ne 1
+            </test>
+        </switch>
+
+        <lag_filter name="systems/thermal/oil-temp">
+            <input>systems/thermal/oil-target</input>
+            <c1>systems/thermal/oil-lag</c1>
+            <output>/engines/engine/oil-temperature-degc</output>
+        </lag_filter>
+    </channel>
+
+    <channel name="Coolant Temperature">
+        <fcs_function name="systems/thermal/coolant-cooling">
+            <function>
+                <product>
+                    <difference>
+                        <property>systems/thermal/coolant-temp</property>
+                        <property>systems/thermal/ambient-temp-c</property>
+                    </difference>
+                    <value>0.015</value>
+                    <sum>
+                        <product>
+                            <property>velocities/vc-kts</property>
+                            <value>-0.01</value>
+                        </product>
+                        <value>-1.0</value>
+                    </sum>
+                </product>
+            </function>
+        </fcs_function>
+
+        <fcs_function name="systems/thermal/coolant-heating">
+            <function>
+                <product>
+                    <difference>
+                        <property>systems/thermal/engine-temp</property>
+                        <property>systems/thermal/coolant-temp</property>
+                    </difference>
+                    <value>0.85</value>
+                </product>
+            </function>
+        </fcs_function>
+
+        <summer name="systems/thermal/coolant-target">
+            <input>systems/thermal/coolant-temp</input>
+            <input>systems/thermal/coolant-heating</input>
+            <input>systems/thermal/coolant-cooling</input>
+        </summer>
+
+        <switch name="systems/thermal/coolant-lag">
+            <default value="0.04" />
+            <test logic="AND" value="5">
+                propulsion/engine/has-started ne 1
+            </test>
+        </switch>
+
+        <lag_filter name="systems/thermal/coolant-temp">
+            <input>systems/thermal/coolant-target</input>
+            <c1>systems/thermal/coolant-lag</c1>
+            <output>/engines/engine/coolant-temperature-degc</output>
+        </lag_filter>
+    </channel>
+
+    <channel name="Exhaust Gas Temperature">
+        <fcs_function name="systems/thermal/egt-heating">
+            <function>
+                <sum>
+                    <property>systems/thermal/ambient-temp-c</property>
+                    <product>
+                        <sum>
+                            <product>
+                                <property>propulsion/engine/map-inhg</property>
+                                <value>26.5</value>
+                            </product>
+                            <value>180.0</value>
+                        </sum>
+                        <property>propulsion/engine/set-running</property>
+                    </product>
+                </sum>
+            </function>
+        </fcs_function>
+
+        <switch name="systems/thermal/egt-target">
+            <default value="systems/thermal/ambient-temp-c" />
+            <test value="systems/thermal/egt-heating">
+                propulsion/engine/set-running eq 1
+            </test>
+        </switch>
+
+        <lag_filter name="systems/thermal/egt-temp">
+            <input>systems/thermal/egt-target</input>
+            <c1>0.40</c1>
+            <output>/engines/engine/egt-degc</output>
+        </lag_filter>
+
+    </channel>
+
+</system>
