@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<mass_balance>
+     <ixx unit="SLUG*FT2"> 310 </ixx> 
+    <iyy unit="SLUG*FT2"> 260 </iyy> 
+    <izz unit="SLUG*FT2"> 530 </izz> 
+    <emptywt unit="LBS"> 584 </emptywt>
+    <location name="CG" unit="IN">
+      <x> -5.00 </x>
+      <y> 0.00 </y>
+      <z> 18.00 </z>
+    </location>
+    <pointmass name="Pilot">
+      <weight unit="LBS"> 150 </weight>
+      <location name="POINTMASS" unit="IN">
+        <x>7.87402</x>
+        <y>-9.44882</y>
+        <z> -12.21</z>
+      </location>
+    </pointmass>
+    <pointmass name="Copilot">
+      <weight unit="LBS"> 150 </weight>
+      <location name="POINTMASS" unit="IN">
+        <x>7.87402</x>
+        <y>9.44882</y>
+        <z> -12.21</z>
+      </location>
+    </pointmass>
+  </mass_balance>

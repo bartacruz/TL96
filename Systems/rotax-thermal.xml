@@ -11,6 +11,7 @@
         Coolant and oil extract heat from the engine with different heat transfer rates.
         Both cools down with air.
         Exaust gas heats proportional to MAP when running. Cools down with ambient air when not.
+        Uses a dynamic value for the integrator and the lag_filter to accelerate the initialization
     </description>
 
     <channel name="Engine Temperature">
@@ -29,26 +30,52 @@
 
         <fcs_function name="systems/thermal/engine-heating">
             <function>
-                <sum>
-                    <property>systems/thermal/ambient-temp-c</property>
-                    <product>
-                        <sum>
-                            <product>
-                                <property>propulsion/engine[0]/map-inhg</property>
-                                <value>1.2</value>
-                            </product>
-                            <value>70</value>
-                        </sum>
-                        <property>propulsion/engine/set-running</property>
-                    </product>
-                </sum>
+                <product>
+                    <sum>
+                        <product>
+                            <property>propulsion/engine[0]/map-inhg</property>
+                            <value>1.2</value>
+                        </product>
+                        <value>10</value>
+                    </sum>
+                    <property>propulsion/engine/set-running</property>
+                </product>
+
             </function>
         </fcs_function>
 
-        <summer name="systems/thermal/engine-target">
+        <!-- Helps to get the engine at ambient temp faster -->
+        <switch name="systems/thermal/engine-air-coeff">
+            <default value="0.005" />
+            <test logic="AND" value="1">
+                propulsion/engine/has-started ne 1
+            </test>
+        </switch>
+
+        <fcs_function name="systems/thermal/engine-cooling-air">
+            <function>
+                <product>
+                    <difference>
+                        <property>systems/thermal/engine-temp</property>
+                        <property>systems/thermal/ambient-temp-c</property>
+                    </difference>
+                    <property>systems/thermal/engine-air-coeff</property>
+                    <sum>
+                        <product>
+                            <property>velocities/vc-kts</property>
+                            <value>0.01</value>
+                        </product>
+                        <value>1.0</value>
+                    </sum>
+                </product>
+            </function>
+        </fcs_function>
+
+        <summer name="systems/thermal/engine-delta-t">
             <input>systems/thermal/engine-heating</input>
             <input>-systems/thermal/oil-heating</input>
             <input>-systems/thermal/coolant-heating</input>
+            <input>-systems/thermal/engine-cooling-air</input>
         </summer>
 
         <switch name="systems/thermal/engine-lag">
@@ -58,14 +85,34 @@
             </test>
         </switch>
 
-        <lag_filter name="systems/thermal/engine-temp">
-            <input>systems/thermal/engine-target</input>
+        <integrator name="systems/thermal/engine-temp">
+            <input>systems/thermal/engine-delta-t</input>
             <c1>systems/thermal/engine-lag</c1>
             <output>/engines/engine/cht-degc</output>
-        </lag_filter>
+        </integrator>
     </channel>
 
     <channel name="Oil Temperture">
+        
+        <switch name="systems/thermal/oil-air-coeff">
+            <default value="0.022" />
+            <test logic="AND" value="1">
+                propulsion/engine/has-started ne 1
+            </test>
+        </switch>
+
+        <fcs_function name="systems/thermal/oil-thermostat">
+            <function>
+                <table>
+                    <independentVar lookup="row">systems/thermal/oil-temp</independentVar>
+                    <tableData>
+                        74.0 0.0
+                        82.0 1.0
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+
         <fcs_function name="systems/thermal/oil-cooling-air">
             <function>
                 <product>
@@ -73,14 +120,15 @@
                         <property>systems/thermal/oil-temp</property>
                         <property>systems/thermal/ambient-temp-c</property>
                     </difference>
-                    <value>0.012</value>
+                    <property>systems/thermal/oil-air-coeff</property>
                     <sum>
                         <product>
                             <property>velocities/vc-kts</property>
-                            <value>-0.01</value>
+                            <value>-0.06</value>
                         </product>
                         <value>-1.0</value>
                     </sum>
+                    <property>systems/thermal/oil-thermostat</property>
                 </product>
             </function>
         </fcs_function>
@@ -105,7 +153,7 @@
         </summer>
 
         <switch name="systems/thermal/oil-lag">
-            <default value="0.0055" />
+            <default value="0.007" />
             <test logic="AND" value="5">
                 propulsion/engine/has-started ne 1
             </test>
@@ -119,6 +167,19 @@
     </channel>
 
     <channel name="Coolant Temperature">
+
+        <fcs_function name="systems/thermal/coolant-thermostat">
+            <function>
+                <table>
+                    <independentVar lookup="row">systems/thermal/coolant-temp</independentVar>
+                    <tableData>
+                        80.0 0.0
+                        88.0 1.0
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+
         <fcs_function name="systems/thermal/coolant-cooling">
             <function>
                 <product>
@@ -126,14 +187,15 @@
                         <property>systems/thermal/coolant-temp</property>
                         <property>systems/thermal/ambient-temp-c</property>
                     </difference>
-                    <value>0.015</value>
+                    <value>0.025</value>
                     <sum>
                         <product>
                             <property>velocities/vc-kts</property>
-                            <value>-0.01</value>
+                            <value>-0.13</value>
                         </product>
                         <value>-1.0</value>
                     </sum>
+                    <property>systems/thermal/coolant-thermostat</property>
                 </product>
             </function>
         </fcs_function>
