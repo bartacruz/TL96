@@ -17,16 +17,15 @@
   <displacement unit="IN3"> 82.6 </displacement>
   <maxhp>        100.00 </maxhp>
   <cycles>         4.0 </cycles>
-  <idlerpm>      1000.0 </idlerpm>
+  <idlerpm>      1400.0 </idlerpm>
   <maxrpm>      5800.0 </maxrpm>
   <sparkfaildrop>  0.1 </sparkfaildrop>
-  <volumetric-efficiency> 0.90 </volumetric-efficiency>
+  <volumetric-efficiency> 0.94 </volumetric-efficiency>
   <man-press-lag> 0.1 </man-press-lag>
-  <static-friction unit="HP"> 0.50 </static-friction>
-  <starter-torque> 80.00 </starter-torque>
-  <starter-rpm> 1400 </starter-rpm>
-  <!-- Defining <bsfc> over-rides the built-in horsepower calculations -->
-  <!--<bsfc>           0.45 </bsfc>-->
+  <static-friction unit="HP"> 2.00 </static-friction> 
+  <starter-torque> 120.00 </starter-torque>
+  <starter-rpm> 1200 </starter-rpm>
+
   <stroke unit="IN">  2.4 </stroke>
   <bore unit="IN">    3.31 </bore>
   <cylinders>         4.0  </cylinders>
