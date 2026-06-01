@@ -12,6 +12,26 @@
 	</model>
 
 	<model>
+		<name>ASI-KTS</name>
+		<path>Aircraft/TL96/Models/Instruments/asi/asi.xml</path>
+		<offsets>
+			<x-m>-0.571461</x-m>
+			<y-m>-0.324623</y-m>
+			<z-m>0.167189</z-m>
+		</offsets>
+	</model>
+	<animation>
+		<type>select</type>
+		<object-name>ASI-KTS</object-name>
+		<condition>
+			<equals>
+				<property>/aircraft/metric</property>
+				<value>0</value>
+			</equals>
+		</condition>
+	</animation>
+	<model>
+		<name>ASI-KMH</name>
 		<path>Aircraft/TL96/Models/Instruments/asi-kmh/asi-kmh.xml</path>
 		<offsets>
 			<x-m>-0.571461</x-m>
@@ -19,7 +39,16 @@
 			<z-m>0.167189</z-m>
 		</offsets>
 	</model>
-
+	<animation>
+		<type>select</type>
+		<object-name>ASI-KMH</object-name>
+		<condition>
+			<equals>
+				<property>/aircraft/metric</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
 	<model>
 		<path>Aircraft/TL96/Models/Instruments/alt/alt.xml</path>
 		<offsets>
@@ -39,6 +68,27 @@
 	</model>
 
 	<model>
+		<name>RPM</name>
+		<path>Aircraft/TL96/Models/Instruments/rpm/rpm.xml</path>
+		<offsets>
+			<x-m>-0.571874</x-m>
+			<y-m>-0.367365</y-m>
+			<z-m>0.085083</z-m>
+		</offsets>
+	</model>
+	<animation>
+		<type>select</type>
+		<object-name>RPM</object-name>
+		<condition>
+			<equals>
+				<property>/aircraft/metric</property>
+				<value>0</value>
+			</equals>
+		</condition>
+	</animation>
+
+	<model>
+		<name>RPM-ROTAX</name>
 		<path>Aircraft/TL96/Models/Instruments/rotax912-rpm/rotax912-rpm.xml</path>
 		<offsets>
 			<x-m>-0.571874</x-m>
@@ -46,6 +96,16 @@
 			<z-m>0.085083</z-m>
 		</offsets>
 	</model>
+	<animation>
+		<type>select</type>
+		<object-name>RPM-ROTAX</object-name>
+		<condition>
+			<equals>
+				<property>/aircraft/metric</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
 
 	<model>
 		<path>Aircraft/TL96/Models/Instruments/vsi/vsi.xml</path>

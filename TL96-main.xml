@@ -1,0 +1,276 @@
+<?xml version="1.0"?>
+<PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
+    <sim>
+        
+        <previews>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>Previews/TL96-ex.png</path>
+            </preview>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>Previews/TL96-ex2.png</path>
+            </preview>
+            <preview>
+                <type>interior</type>
+                <splash type="bool">true</splash>
+                <path>Previews/TL96-int.png</path>
+            </preview>
+        </previews>
+        
+        <view n="0">
+            <name>Pilot</name>
+            <type>lookfrom</type>
+            <internal type="bool">true</internal>
+            <config>
+                <x-offset-m type="double">-0.27</x-offset-m>
+                <y-offset-m type="double">0.51</y-offset-m>
+                <z-offset-m type="double">0.17</z-offset-m>
+                <pitch-offset-deg>-10</pitch-offset-deg>
+                <default-field-of-view-deg type="double">85.0</default-field-of-view-deg>
+                <from-model type="bool">true</from-model>
+                <from-model-idx type="int">0</from-model-idx>
+                <ground-level-nearplane-m type="double">6f</ground-level-nearplane-m>
+                <limits>
+                    <enabled type="bool">true</enabled>
+                    <left>
+                        <heading-max-deg type="double">140</heading-max-deg>
+                        <x-offset-max-m type="double">0.15</x-offset-max-m>
+                        <x-offset-threshold-deg type="double">65</x-offset-threshold-deg>
+                    </left>
+                    <right>
+                        <heading-max-deg type="double">140</heading-max-deg>
+                        <x-offset-max-m type="double">0.15</x-offset-max-m>
+                        <x-offset-threshold-deg type="double">65</x-offset-threshold-deg>
+                    </right>
+                </limits>
+            </config>
+            <dynamic>
+                <enabled type="bool">false</enabled>
+            </dynamic>
+        </view>
+
+        <view n="101">
+            <name>Instructor</name>
+            <type>lookfrom</type>
+            <internal type="bool">true</internal>
+            <config>
+                <x-offset-m type="double">0.27</x-offset-m>
+                <y-offset-m type="double">0.51</y-offset-m>
+                <z-offset-m type="double">0.17</z-offset-m>
+                <pitch-offset-deg>-10</pitch-offset-deg>
+                <default-field-of-view-deg type="double">85.0</default-field-of-view-deg>
+                <from-model type="bool">true</from-model>
+                <from-model-idx type="int">0</from-model-idx>
+                <ground-level-nearplane-m type="double">6f</ground-level-nearplane-m>
+                <limits>
+                    <enabled type="bool">true</enabled>
+                    <left>
+                        <heading-max-deg type="double">140</heading-max-deg>
+                        <x-offset-max-m type="double">0.15</x-offset-max-m>
+                        <x-offset-threshold-deg type="double">65</x-offset-threshold-deg>
+                    </left>
+                    <right>
+                        <heading-max-deg type="double">140</heading-max-deg>
+                        <x-offset-max-m type="double">0.15</x-offset-max-m>
+                        <x-offset-threshold-deg type="double">65</x-offset-threshold-deg>
+                    </right>
+                </limits>
+            </config>
+            <dynamic>
+                <enabled type="bool">false</enabled>
+            </dynamic>
+        </view>
+
+        <sound>
+            <path type="string">Sounds/sound.xml</path>
+        </sound>
+
+        <systems>
+            <autopilot n="200">
+                <path>Aircraft/TL96/Systems/systems.xml</path>
+            </autopilot>
+        </systems>
+
+
+        <hitches>
+            <aerotow>
+                <mp-auto-connect-period type="float">1.0</mp-auto-connect-period>
+
+                <decoupled-force-and-rope-locations type="bool">true</decoupled-force-and-rope-locations>
+                <local-pos-x type="float">-3.51967</local-pos-x>
+                <local-pos-y type="float"> 0.00</local-pos-y>
+                <local-pos-z type="float">0.074688</local-pos-z>
+
+            </aerotow>
+        </hitches>
+
+        <menubar>
+            <default>
+                <menu n="200">
+                    <label>TL96</label>
+                    <enabled type="bool">true</enabled>
+
+                    <item>
+                        <label>Autostart</label>
+                        <binding>
+                            <command>nasal</command>
+                            <script>startup.autostart()</script>
+                        </binding>
+                    </item>
+                    <item>
+                        <label>Select MP Instructor</label>
+                        <binding>
+                            <command>dialog-show</command>
+                            <dialog-name>instructor</dialog-name>
+                        </binding>
+                    </item>
+                </menu>
+            </default>
+        </menubar>
+
+        <aircraft-data>
+            <path>aircraft/time/hobbssec</path>
+        </aircraft-data>
+
+        <multiplay>
+            <generic>
+                <float n="0" alias="/instrumentation/altimeter/indicated-altitude-ft" />
+                <float n="1" alias="/instrumentation/airspeed-indicator/indicated-speed-kt" />
+                <float n="2" alias="/instrumentation/vertical-speed-indicator/indicated-speed-fpm" />
+                <float n="3" alias="/instrumentation/slip-skid-ball/indicated-slip-skid" />
+                <float n="4" alias="/consumables/fuel/tank/level-gal_us" />
+                <float n="5" alias="/controls/engines/engine/mixture" />
+                <float n="6" alias="/controls/engines/engine/throttle" />
+                <float n="7" alias="/controls/flight/elevator-trim" />
+                <float n="8" alias="/controls/flight/rudder-trim" />
+                <float n="9" alias="/engines/engine/egt-degc" />
+                <float n="10" alias="/engines/engine/cht-degc" />
+                <float n="11" alias="/engines/engine/oil-temperature-degc" />
+                <float n="12" alias="/engines/engine/oil-pressure-bar01" />
+                <float n="13" alias="/engines/engine[0]/rpm" />
+                <int n="0" alias="/aircraft/magnetos/Lmag" />
+                <int n="1" alias="/aircraft/magnetos/Rmag" />
+                <int n="2" alias="/aircraft/battery/switch" />
+                <int n="3" alias="/aircraft/flydat/ison" />
+                <int n="4" alias="/aircraft/ipad/ison" />
+                <int n="5" alias="/aircraft/ipad/screen" />
+                <int n="6" alias="/controls/gear/brake-parking" />
+                <int n="7" alias="/aircraft/ipad/error" />
+                <int n="8" alias="/autopilot/locks/heading" />
+                <int n="9" alias="/autopilot/locks/altitude" />
+            </generic>
+        </multiplay>
+
+        <expected-aircraft-dir-name>TL96</expected-aircraft-dir-name>
+        
+
+    </sim>
+
+    <payload>
+        <weight>
+            <name type="string">Pilot</name>
+            <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[0]" />
+            <min-lb type="double">110.0</min-lb>
+            <max-lb type="double">330.0</max-lb>
+        </weight>
+        <weight>
+            <name type="string">Copilot</name>
+            <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[1]" />
+            <min-lb type="double">110.0</min-lb>
+            <max-lb type="double">330.0</max-lb>
+        </weight>
+    </payload>
+
+    <controls>
+        <gear>
+            <brake-parking>1</brake-parking>
+        </gear>
+        <engines>
+            <engine>
+                <mixture>0</mixture>
+            </engine>
+        </engines>
+        <electric>
+            <battery-switch>false</battery-switch>
+        </electric>
+    </controls>
+    <aircraft>
+        <ipad>
+            <ison>0</ison>
+        </ipad>
+        <flydat>
+            <ison>0</ison>
+        </flydat>
+        <magnetos>
+            <Lmag>0</Lmag>
+            <Rmag>0</Rmag>
+        </magnetos>
+        <battery>
+            <switch>1</switch>
+        </battery>
+        <metric>0</metric>
+    </aircraft>
+
+
+    <canopy>
+        <position-norm>0</position-norm>
+    </canopy>
+
+    <input>
+        <keyboard>
+            <key n="79">
+                <name>O</name>
+                <desc>Open aerotow-hook</desc>
+                <binding>
+                    <command>nasal</command>
+                    <script>towing.releaseHitch("aerotow")</script>
+                </binding>
+            </key>
+        </keyboard>
+    </input>
+
+    <instrumentation>
+        <transponder>
+            <inputs>
+                <knob-mode>0</knob-mode>
+            </inputs>
+        </transponder>
+    </instrumentation>
+
+    <fdm>
+        <jsbsim>
+            <external_reactions>
+                <chute>
+                    <magnitude>0</magnitude>
+                </chute>
+            </external_reactions>
+        </jsbsim>
+    </fdm>
+
+    <nasal>
+        <ar3201>
+            <file>Aircraft/TL96/Models/Instruments/ar-3201/AR3201.nas</file>
+        </ar3201>
+        <startup>
+            <file>Aircraft/TL96/Nasal/startup.nas</file>
+        </startup>
+        <canvas_map>
+            <file>Aircraft/TL96/Models/ipad/canvas_map.nas</file>
+        </canvas_map>
+    </nasal>
+
+    <autopilot>
+        <locks>
+            <heading>0</heading>
+            <altitude>0</altitude>
+        </locks>
+        <settings>
+            <target-roll-deg>0</target-roll-deg>
+            <target-pitch-deg>0</target-pitch-deg>
+        </settings>
+    </autopilot>
+
+</PropertyList>

@@ -12,6 +12,8 @@
         <author>Thilo (thilo2707@gmail.com)</author>
         <flight-model>jsb</flight-model>
         <aero>TL96</aero>
+        <variant-of>TL96</variant-of>
+
         <previews>
             <preview>
                 <type>exterior</type>
@@ -131,11 +133,6 @@
                 </menu>
             </default>
         </menubar>
-
-        
-    
-        <variant-of>TL96</variant-of>
-
     </sim>
 
     <aircraft>
