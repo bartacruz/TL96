@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="http://jsbsim.sourceforge.net/JSBSim.xsl"?>
+<fdm_config name="TL96" version="2.0" release="ALPHA"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
+
+  <fileheader>
+    <author> Julio Santa Cruz.</author>
+    <filecreationdate>2026-08-02</filecreationdate>
+    <version>1.0</version>
+    <description> Models a TL96. Heavily modified the original by Aeromatic v 0.96 </description>
+  </fileheader>
+
+  <!--
+  File:     TL96.xml
+  Inputs:
+    name:          TL96
+    type:          light single
+    max weight:    992.25 lb
+    wing span:     31.4976 ft
+    length:        21.3265 ft
+    wing area:     130.2560281 sq-ft
+    gear type:     tricycle
+    castering:     1
+    retractable?:  no
+    # engines:     1
+    engine type:   piston
+    engine layout: forward fuselage
+    yaw damper?    no
+
+  Outputs:
+    wing loading:  7.62 lb/sq-ft
+    payload:       186.1 lbs
+    CL-alpha:      5 per radian
+    CL-0:          0.25
+    CL-max:        1.4
+    CD-0:          0.028
+    K:             0.04
+
+-->
+
+  <metrics file="Systems/tl96-metrics" />
+  <mass_balance file="Systems/tl96-mass_balance" />
+  <ground_reactions file="Systems/tl96-ground_reactions" />
+
+  <propulsion>
+
+    <engine file="ROTAX912S">
+      <location unit="IN">
+        <x> -50.39 </x>
+        <y> 0.00 </y>
+        <z> 2.61 </z>
+      </location>
+      <feed>0</feed>
+      <thruster file="prop-68">
+        <sense> 1 </sense>
+        <location unit="IN">
+          <x> -69.58 </x>
+          <y> 0.00 </y>
+          <z> 5.66 </z>
+        </location>
+        <orient unit="DEG">
+          <pitch> -2.00 </pitch>
+          <roll> 0.00 </roll>
+          <yaw> 2.00 </yaw>
+        </orient>
+      </thruster>
+    </engine>
+
+    <tank type="FUEL" number="0">
+      <location unit="IN">
+        <x> 4.50 </x>
+        <y> 0 </y>
+        <z> -2.12 </z>
+      </location>
+      <capacity unit="LBS"> 120.00 </capacity>
+      <contents unit="LBS"> 5.00 </contents>
+    </tank>
+
+  </propulsion>
+  <!-- <system file="rotax-performance" /> -->
+  <system file="rotax-thermal" />
+  <flight_control file="Systems/tl96-flight_control" />
+  <aerodynamics file="Systems/tl96-aerodynamics" />
+  <external_reactions file="Systems/tl96-external_reactions" />
+
+</fdm_config>
