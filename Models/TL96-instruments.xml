@@ -12,7 +12,7 @@
 	</model>
 
 	<model>
-		<path>Aircraft/TL96/Models/Instruments/asi/asi.xml</path>
+		<path>Aircraft/TL96/Models/Instruments/asi-kmh/asi-kmh.xml</path>
 		<offsets>
 			<x-m>-0.571461</x-m>
 			<y-m>-0.324623</y-m>
@@ -39,7 +39,7 @@
 	</model>
 
 	<model>
-		<path>Aircraft/TL96/Models/Instruments/rpm/rpm.xml</path>
+		<path>Aircraft/TL96/Models/Instruments/rotax912-rpm/rotax912-rpm.xml</path>
 		<offsets>
 			<x-m>-0.571874</x-m>
 			<y-m>-0.367365</y-m>
