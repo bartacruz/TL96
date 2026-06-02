@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PropertyList>
-
+    <filter>
+        <type>gain</type>
+        <gain>0.0689476</gain>
+        <input>engines/engine/oil-pressure-psi</input>
+        <output>engines/engine/oil-pressure-bar01</output>
+    </filter>
     <!--iPad-->
     <filter>
         <name>flipflopinterpolation</name>
