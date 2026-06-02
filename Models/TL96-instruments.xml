@@ -68,7 +68,7 @@
 	</model>
 
 	<model>
-		<name>RPM</name>
+		<name>RPM-ORIG</name>
 		<path>Aircraft/TL96/Models/Instruments/rpm/rpm.xml</path>
 		<offsets>
 			<x-m>-0.571874</x-m>
@@ -78,7 +78,7 @@
 	</model>
 	<animation>
 		<type>select</type>
-		<object-name>RPM</object-name>
+		<object-name>RPM-ORIG</object-name>
 		<condition>
 			<equals>
 				<property>/aircraft/metric</property>
